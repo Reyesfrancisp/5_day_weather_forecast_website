@@ -9,3 +9,25 @@ var specialURL = `weather?appid=${apiKey}&units=imperial&q=${cityName},US`;
 var weatherURL = baseURL + specialURL;
 
 console.log(weatherURL);
+
+
+
+
+function pageInitialize () {
+
+
+//button click to get weather city
+
+//store in local storage the last X cities from local storage
+
+//request to get weather data
+
+//process data to get the current weather and 5 day forecast
+
+//output the data to display in the HTML
+
+}
+
+
+$(document).ready(pageInitialize());
+
