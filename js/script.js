@@ -1,33 +1,64 @@
-
-
-var baseURL = "https://api.openweathermap.org/data/2.5/";
 var apiKey = "39d4c29ad2d7cc69817d5de93962e041";
-var cityName = "New York";
-var specialURL = `weather?appid=${apiKey}&units=imperial&q=${cityName},US`;
-//get from user input to search box
+var baseUrl = "https://api.openweathermap.org/data/2.5/";
+var searchHistory = [];
 
-var weatherURL = baseURL + specialURL;
+// Function to fetch current weather data
+function getCurrentWeather(city) {
+    var currentWeatherUrl = `${baseUrl}weather?appid=${apiKey}&units=imperial&q=${city},US`;
 
-console.log(weatherURL);
+    $.ajax({
+        url: currentWeatherUrl,
+        dataType: "json",
+        type: "GET",
+        success: function (response) {
+            var weatherData = response;
+            var cityName = weatherData.name;
+            var temperature = weatherData.main.temp;
+            var humidity = weatherData.main.humidity;
+            var windSpeed = weatherData.wind.speed;
+            var icon = weatherData.weather[0].icon;
+            var date = dayjs().format('MM/DD/YYYY');
 
+            // Display current weather information
+            $('#cityName').text(cityName);
+            $('#currentDate').text(`Date: ${date}`);
+            $('#temperature').text(`Temperature: ${temperature}°F`);
+            $('#humidity').text(`Humidity: ${humidity}%`);
+            $('#windSpeed').text(`Wind Speed: ${windSpeed} mph`);
+            $('#weatherIcon').attr('src', `https://openweathermap.org/img/w/${icon}.png`);
 
+            // Store the searched city in local storage and update search history
+            if (!searchHistory.includes(cityName)) {
+                searchHistory.push(cityName);
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                updateSearchHistory();
+            }
 
-
-function pageInitialize () {
-
-
-//button click to get weather city
-
-//store in local storage the last X cities from local storage
-
-//request to get weather data
-
-//process data to get the current weather and 5 day forecast
-
-//output the data to display in the HTML
-
+        },
+        error: function (error) {
+            console.log('Error:', error);
+            $('#currentWeather').html('An error occurred while fetching weather data.');
+        }
+    });
+}
+// Update search history in the HTML
+function updateSearchHistory() {
+    $('#searchHistory').empty();
+    searchHistory.forEach(function (city) {
+        var historyItem = `<li>${city}</li>`;
+        $('#searchHistory').append(historyItem);
+    });
 }
 
+// Search form submission
+$("#searchForm").submit(function (event) {
+    event.preventDefault();
+    var city = $("#searchBar").val();
+    getCurrentWeather(city);
+});
 
-$(document).ready(pageInitialize());
-
+// Load search history
+if (localStorage.getItem('searchHistory')) {
+    searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+    updateSearchHistory();
+}
