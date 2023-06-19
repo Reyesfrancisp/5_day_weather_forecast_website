@@ -48,7 +48,7 @@ function getCurrentWeather(city, state) {
     });
 }
 // Update search history in the HTML
-function updateSearchHistory() {
+function updateSearchHistory(city, state) {
     $('#searchHistory').empty();
     searchHistory.forEach(function () {
         var historyItem = `<li>${city}, ${state}</li>`;
@@ -79,5 +79,8 @@ $("#searchBar").keydown(function (event) {
 // Load search history
 if (localStorage.getItem('searchHistory')) {
     searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
-    updateSearchHistory();
+    console.log(searchHistory);
+    var lastSearch = searchHistory[searchHistory.length - 1];
+    var [city, state] = lastSearch.split(",");
+    updateSearchHistory(city, state);
 }
