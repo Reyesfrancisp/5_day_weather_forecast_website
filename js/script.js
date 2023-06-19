@@ -3,7 +3,7 @@ var baseUrl = "https://api.openweathermap.org/data/2.5/";
 var searchHistory = [];
 
 // Function to fetch current weather data
-function getCurrentWeather(city) {
+function getCurrentWeather(city, state) {
     var currentWeatherUrl = `${baseUrl}weather?appid=${apiKey}&units=imperial&q=${city},US`;
 
     $.ajax({
@@ -29,9 +29,9 @@ function getCurrentWeather(city) {
 
             // Store the searched city in local storage and update search history
             if (!searchHistory.includes(cityName)) {
-                searchHistory.push(cityName);
+                searchHistory.push(cityName+", "+state);
                 localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-                updateSearchHistory();
+                updateSearchHistory(cityName,state);
             }
 
             // Forecast data coordinates
@@ -50,17 +50,20 @@ function getCurrentWeather(city) {
 // Update search history in the HTML
 function updateSearchHistory() {
     $('#searchHistory').empty();
-    searchHistory.forEach(function (city) {
-        var historyItem = `<li>${city}</li>`;
+    searchHistory.forEach(function () {
+        var historyItem = `<li>${city}, ${state}</li>`;
         $('#searchHistory').append(historyItem);
     });
 }
 
 // Search form submission
-$("#searchForm").submit(function (event) {
-    event.preventDefault();
+$("#searchForm").submit(function (eventObject) {
+    eventObject.preventDefault();
     var city = $("#searchBar").val();
-    getCurrentWeather(city);
+    var state = $("#stateCode").val();
+    console.log(city);
+    console.log(state);
+    getCurrentWeather(city,state);
 });
 
 // Enter button
@@ -68,7 +71,8 @@ $("#searchBar").keydown(function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
         var city = $("#searchBar").val();
-        getCurrentWeather(city);
+        var state = $("#stateCode").val();
+        getCurrentWeather(city,state);
     }
 });
 
