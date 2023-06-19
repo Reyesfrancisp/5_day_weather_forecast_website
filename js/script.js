@@ -93,13 +93,25 @@ function getForecast(lat, lon) {
 
 
 // Update search history in the HTML
+
 function updateSearchHistory() {
     $('#searchHistory').empty();
     searchHistory.forEach(function (entry) {
-        var historyItem = `<li>${entry}</li>`;
-        $('#searchHistory').append(historyItem);
+      var [city, state] = entry.split(","); // Split the entry into city and state
+      var historyItem = `<li><button class="searchBtn">${city}, ${state}</button></li>`;
+      $('#searchHistory').append(historyItem);
     });
-}
+  
+    // Add click event listener to the search buttons
+    $('.searchBtn').click(function () {
+      var buttonText = $(this).text();
+      var [cityHistory, stateHistory] = buttonText.split(","); // Extract the city and state from the button text
+      $("#searchBar").val(cityHistory.trim());
+      $("#stateCode").val(stateHistory.trim());
+      $("#currentWeather").removeClass("invisible");
+      getCurrentWeather(cityHistory.trim(), stateHistory.trim());
+    });
+  }
 
 // Search form submission
 $("#searchForm").submit(function (eventObject) {
