@@ -57,6 +57,15 @@ $("#searchForm").submit(function (event) {
     getCurrentWeather(city);
 });
 
+// Enter button
+$("#searchBar").keydown(function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      var city = $("#searchBar").val();
+      getCurrentWeather(city);
+    }
+  });
+
 // Load search history
 if (localStorage.getItem('searchHistory')) {
     searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
