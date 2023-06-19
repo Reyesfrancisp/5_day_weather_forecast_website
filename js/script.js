@@ -72,7 +72,7 @@ function getForecast(lat, lon) {
                 if (forecast.dt_txt.includes("12:00:00")) {
                     // Display forecast information
                     var forecastBox = `
-          <div class="forecast-box">
+          <div class="forecast-box border-double border-8 bg-white p-2 m-2">
             <p>Date: ${date}</p>
             <p>Temperature: ${temperature}°F</p>
             <p>Humidity: ${humidity}%</p>
@@ -99,7 +99,8 @@ function updateSearchHistory() {
     $('#searchHistory').empty();
     searchHistory.forEach(function (entry, index) {
         var [city, state] = entry.split(","); // Split the entry into city and state
-        var historyItem = `<li class = "px-1 py-2 my-3 mx-2 text-center"><button class="px-8 searchBtn bg-indigo-500 shadow-lg shadow-indigo-500/50 hover:shadow-lg">Entry ${(index+1)}: ${city}, ${state}</button></li>`;
+        var historyItem = `<li class = "px-1 py-2 my-3 mx-2 text-center"><button type="button" class="searchBtn text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Entry ${(index+1)}: ${city}, ${state}</button></li>`;
+        
         $('#searchHistory').append(historyItem);
     });
 
@@ -152,7 +153,7 @@ if (localStorage.getItem('searchHistory')) {
 
 //current time
 function displayCurrentTime() {
-    var currentTime = dayjs().format("h:mm A");
+    var currentTime = dayjs().format("h:mm:ss A");
     $("#displayTime").text(currentTime);
     $("#displayTime").removeClass("invisible");
     var currentDate = dayjs().format('MM/DD/YYYY');
