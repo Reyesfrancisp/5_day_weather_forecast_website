@@ -20,7 +20,7 @@ function getCurrentWeather(city, state) {
             var date = dayjs().format('MM/DD/YYYY');
 
             // Display current weather information
-            $('#cityName').text(cityName);
+            $('#cityName').text(cityName, state);
             $('#currentDate').text(`Date: ${date}`);
             $('#temperature').text(`Temperature: ${temperature}°F`);
             $('#humidity').text(`Humidity: ${humidity}%`);
@@ -68,20 +68,22 @@ function getForecast(lat, lon) {
                 var temperature = forecast.main.temp;
                 var humidity = forecast.main.humidity;
                 var icon = forecast.weather[0].icon;
-
-                // Display forecast information
-                var forecastBlock = `
-          <div class="forecast-block">
+                if (forecast.dt_txt.includes("12:00:00")) {
+                    // Display forecast information
+                    var forecastBox = `
+          <div class="forecast-box">
             <p>Date: ${date}</p>
             <p>Temperature: ${temperature}°F</p>
             <p>Humidity: ${humidity}%</p>
             <img src="https://openweathermap.org/img/w/${icon}.png" alt="Weather Icon">
           </div>
         `;
-                console.log(forecast.dt_txt);
-                $('#forecast').append(forecastBlock);
-            });
+                    console.log(forecast.dt_txt);
+                    $('#forecast').append(forecastBox);
+                };
+            })
         },
+        //error response
         error: function (error) {
             console.log('Error:', error);
             $('#forecast').html('An error occurred while fetching forecast data.');
@@ -106,6 +108,7 @@ $("#searchForm").submit(function (eventObject) {
     var state = $("#stateCode").val();
     console.log(city);
     console.log(state);
+    $("#currentWeather").removeClass("invisible");
     getCurrentWeather(city, state);
 });
 
@@ -115,7 +118,11 @@ $("#searchBar").keydown(function (event) {
         event.preventDefault();
         var city = $("#searchBar").val();
         var state = $("#stateCode").val();
+        console.log(city);
+        console.log(state);
+        $("#currentWeather").removeClass("invisible");
         getCurrentWeather(city, state);
+
     }
 });
 
@@ -127,3 +134,16 @@ if (localStorage.getItem('searchHistory')) {
     var [city, state] = lastSearch.split(",");
     updateSearchHistory(city, state);
 }
+
+
+//current time
+function displayCurrentTime() {
+    var currentTime = dayjs().format("h:mm A");
+    $("#displayTime").text(currentTime);
+    $("#displayTime").removeClass("invisible");
+    var currentDate = dayjs().format('MM/DD/YYYY');
+    $("#displayDate").text(currentDate);
+    $("#displayDate").removeClass("invisible");
+}
+
+setInterval(displayCurrentTime, 1000);

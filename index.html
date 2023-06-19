@@ -12,12 +12,12 @@
 <body>
     <header class="flex justify-between">
         <h2 class="ml-10">
-            5 Day Weather Forecast
+           Weather Forecast
         </h2>
-        <h3 id="displayTime">
+        <h3 id="displayTime" class="invisible">
             Current Time
         </h3>
-        <h3 class="mr-10" id="displayDate">Current Date</h3>
+        <h3 class="mr-10 invisible" id="displayDate">Current Date</h3>
     </header>
 
     <main class="grid grid-cols-4">
@@ -101,7 +101,7 @@
             </ul>
         </section>
 
-        <section id="currentWeather" class="col-span-3">
+        <section id="currentWeather" class="col-span-3 invisible" >
             <h3 id="cityName"></h3>
             <h4 id ="stateName"></h4>
             <p id="currentDate"></p>
@@ -111,7 +111,7 @@
             <img id="weatherIcon" alt="Weather Icon">
         </section>
 
-        <section id="forecast" class="col-span-4">
+        <section id="forecast" class="grid-cols-4 col-span-3 col-start-2">
 
         </section>
     </main>
