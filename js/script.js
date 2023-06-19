@@ -34,6 +34,12 @@ function getCurrentWeather(city) {
                 updateSearchHistory();
             }
 
+            // Forecast data coordinates
+            var lat = weatherData.coord.lat;
+            var lon = weatherData.coord.lon;
+            console.log(lat);
+            console.log(lon);
+
         },
         error: function (error) {
             console.log('Error:', error);
@@ -58,13 +64,13 @@ $("#searchForm").submit(function (event) {
 });
 
 // Enter button
-$("#searchBar").keydown(function(event) {
+$("#searchBar").keydown(function (event) {
     if (event.keyCode === 13) {
-      event.preventDefault();
-      var city = $("#searchBar").val();
-      getCurrentWeather(city);
+        event.preventDefault();
+        var city = $("#searchBar").val();
+        getCurrentWeather(city);
     }
-  });
+});
 
 // Load search history
 if (localStorage.getItem('searchHistory')) {
