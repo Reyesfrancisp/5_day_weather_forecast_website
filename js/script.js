@@ -28,10 +28,11 @@ function getCurrentWeather(city, state) {
             $('#weatherIcon').attr('src', `https://openweathermap.org/img/w/${icon}.png`);
 
             // Store the searched city in local storage and update search history
-            if (!searchHistory.includes(cityName)) {
-                searchHistory.push(cityName + ", " + state);
+            var searchEntry = cityName + ", " + state;
+            if (!searchHistory.includes(searchEntry)) {
+                searchHistory.push(searchEntry);
                 localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-                updateSearchHistory(cityName, state);
+                updateSearchHistory();
             }
 
             // Forecast data coordinates
@@ -96,22 +97,23 @@ function getForecast(lat, lon) {
 
 function updateSearchHistory() {
     $('#searchHistory').empty();
-    searchHistory.forEach(function (entry) {
-      var [city, state] = entry.split(","); // Split the entry into city and state
-      var historyItem = `<li><button class="searchBtn">${city}, ${state}</button></li>`;
-      $('#searchHistory').append(historyItem);
+    searchHistory.forEach(function (entry, index) {
+        var [city, state] = entry.split(","); // Split the entry into city and state
+        var historyItem = `<li class = "px-1 py-2 my-3 mx-2 text-center"><button class="searchBtn bg-amber-400 hover:shadow-lg">Entry ${(index+1)}: ${city}, ${state}</button></li>`;
+        $('#searchHistory').append(historyItem);
     });
-  
+
     // Add click event listener to the search buttons
     $('.searchBtn').click(function () {
-      var buttonText = $(this).text();
-      var [cityHistory, stateHistory] = buttonText.split(","); // Extract the city and state from the button text
-      $("#searchBar").val(cityHistory.trim());
-      $("#stateCode").val(stateHistory.trim());
-      $("#currentWeather").removeClass("invisible");
-      getCurrentWeather(cityHistory.trim(), stateHistory.trim());
+        var buttonText = $(this).text();
+        var [entryNumber, info] = buttonText.split(":"); // Extract the city and state from the button text
+        var [cityHistory, stateHistory] = info.split(",");
+        $("#searchBar").val(cityHistory.trim());
+        $("#stateCode").val(stateHistory.trim());
+        $("#currentWeather").removeClass("invisible");
+        getCurrentWeather(cityHistory.trim(), stateHistory.trim());
     });
-  }
+}
 
 // Search form submission
 $("#searchForm").submit(function (eventObject) {
@@ -144,7 +146,7 @@ if (localStorage.getItem('searchHistory')) {
     console.log(searchHistory);
     var lastSearch = searchHistory[searchHistory.length - 1];
     var [city, state] = lastSearch.split(",");
-    updateSearchHistory(city, state);
+    updateSearchHistory();
 }
 
 
