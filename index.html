@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-    <header class="flex justify-between">
+<body class = "bg-gradient-to-br from-cyan-400 to-blue-500 font-sans">
+    <header class="flex justify-between my-6 p-8">
         <h2 class="ml-10">
             Weather Forecast
         </h2>
@@ -20,12 +20,12 @@
         <h3 class="mr-10 invisible" id="displayDate">Current Date</h3>
     </header>
 
-    <main class="grid grid-cols-4">
-        <section id="searchbarLeft">
+    <main class="grid grid-cols-3">
+        <section id="searchbarLeft" class="ml-4 px-8 bg-gradient-to-tl from-slate-400 to-blue-500">
             <form id="searchForm">
                 <label for="searchBar"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-                <div class="relative">
+                <div class="relative my-6">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -35,16 +35,16 @@
                     </div>
                     <input type="search" id="searchBar"
                         class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search city for weather" required>
+                        placeholder="Search City" required>
                     <button type="submit"
                         class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                 </div>
 
-                <label for="stateCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an
-                    option</label>
+                <label for="stateCode" class="text-black block mb-2 text-sm font-medium">Select a
+                    state</label>
                 <select id="stateCode"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>Choose a state</option>
+                    <option selected>State Codes</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -101,18 +101,20 @@
             </ul>
         </section>
 
-        <section id="currentWeather" class="col-span-3 invisible">
-            <h3 id="cityName"></h3>
-            <h4 id="stateName"></h4>
+        <section id="weatherDisplay" class="col-span-2 flex-row invisible items-center">
+<!-- main section for content -->
+            <section class = "flex flex-col text-center mb-4 p-5">
+            <h3 id="cityName" class = "text-lg"></h3>
             <p id="currentDate"></p>
             <p id="temperature"></p>
             <p id="humidity"></p>
             <p id="windSpeed"></p>
-            <img id="weatherIcon" alt="Weather Icon">
+            <img class = "place-self-center" id="weatherIcon" alt="Weather Icon">
+        </section>
 
-
-            <section id="forecast" class="grid-cols-4 col-span-3 col-start-2 flex flex-row justify-evenly">
+            <section id="forecast" class="flex flex-row justify-evenly mt-20">
             </section>
+
         </section>
     </main>
 

@@ -20,7 +20,7 @@ function getCurrentWeather(city, state) {
             var date = dayjs().format('MM/DD/YYYY');
 
             // Display current weather information
-            $('#cityName').text(cityName, state);
+            $('#cityName').text(cityName + ", " + state);
             $('#currentDate').text(`Date: ${date}`);
             $('#temperature').text(`Temperature: ${temperature}°F`);
             $('#humidity').text(`Humidity: ${humidity}%`);
@@ -99,7 +99,7 @@ function updateSearchHistory() {
     $('#searchHistory').empty();
     searchHistory.forEach(function (entry, index) {
         var [city, state] = entry.split(","); // Split the entry into city and state
-        var historyItem = `<li class = "px-1 py-2 my-3 mx-2 text-center"><button class="searchBtn bg-amber-400 hover:shadow-lg">Entry ${(index+1)}: ${city}, ${state}</button></li>`;
+        var historyItem = `<li class = "px-1 py-2 my-3 mx-2 text-center"><button class="px-8 searchBtn bg-indigo-500 shadow-lg shadow-indigo-500/50 hover:shadow-lg">Entry ${(index+1)}: ${city}, ${state}</button></li>`;
         $('#searchHistory').append(historyItem);
     });
 
@@ -110,7 +110,7 @@ function updateSearchHistory() {
         var [cityHistory, stateHistory] = info.split(",");
         $("#searchBar").val(cityHistory.trim());
         $("#stateCode").val(stateHistory.trim());
-        $("#currentWeather").removeClass("invisible");
+        $("#weatherDisplay").removeClass("invisible");
         getCurrentWeather(cityHistory.trim(), stateHistory.trim());
     });
 }
@@ -122,7 +122,7 @@ $("#searchForm").submit(function (eventObject) {
     var state = $("#stateCode").val();
     console.log(city);
     console.log(state);
-    $("#currentWeather").removeClass("invisible");
+    $("#weatherDisplay").removeClass("invisible");
     getCurrentWeather(city, state);
 });
 
@@ -134,7 +134,7 @@ $("#searchBar").keydown(function (event) {
         var state = $("#stateCode").val();
         console.log(city);
         console.log(state);
-        $("#currentWeather").removeClass("invisible");
+        $("#weatherDisplay").removeClass("invisible");
         getCurrentWeather(city, state);
 
     }
