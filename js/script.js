@@ -149,16 +149,15 @@ function pageInitialize() {
     });
     //When the button is clicked on the left side search history
     // Add click event listener to the search buttons
-    $(".searchBtn").on("click", (function () {
-        console.log("History clicked");
+    $(document).on("click", ".searchBtn", function () {
         var buttonText = $(this).text();
-        console.log(buttonText);
         var info, entryNumber, cityHistory, stateHistory;
         [entryNumber, info] = buttonText.split(":"); // Extract the city and state from the button text
         [cityHistory, stateHistory] = info.split(",");
+        console.log ("Search History Clicked");
         $("#searchBar").val(cityHistory.trim());
         $("#stateCode").val(stateHistory.trim());
         getCurrentWeather(cityHistory.trim(), stateHistory.trim());
-    }));
+      });
 }
 setInterval(displayCurrentTime, 1000);
